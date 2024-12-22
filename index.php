@@ -21,10 +21,11 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
         Constants::THEME_COLOR,
         "HIV/AIDS blog, Nurse Tendai, HIV awareness, personal stories, HIV resources, healthcare",
         "Nurse Tendai",
+        Constants::SITE_URL,
     );
     $head->render();
     ?>
-    <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
 </head>
 
 <body class="bg-gray-100">
@@ -44,7 +45,7 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
             <div class="relative container mx-auto px-4 py-20 text-left">
                 <h2 class="text-white text-4xl font-bold">Nurse Tendia's HIV/AIDS Awareness Blog</h2>
                 <div class="absolute bottom-4 left-4">
-                    <a href="/about"
+                    <a href="/about#about"
                         class="bg-white text-purple-600 font-semibold py-2 px-4 rounded hover:bg-purple-200 flex">
                         Learn More
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -71,13 +72,13 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
                         by these conditions.
                     </p>
                     <a href="/blog"
-                        class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex align-center mt-4">Read
-                        Our Blog <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="lucide lucide-arrow-right">
-                            <path d="M5 12h14" />
-                            <path d="m12 5 7 7-7 7" />
-                        </svg> </a>
+                        class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex mt-4  items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-3 h-3 mr-2 fill-current">
+                            <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                            <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                        </svg>
+                        Read Our Blog
+                    </a>
                 </div>
                 <div class="w-full md:w-1/2">
                     <img src="./assets/images/womanholdingribbon.webp" alt="Blog Image"
@@ -121,14 +122,15 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
                 </div>
             </div>
             <div class="mt-8">
-                <a href="#"
-                    class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex align-center">View
-                    All Articles <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class="lucide lucide-arrow-right">
-                        <path d="M5 12h14" />
-                        <path d="m12 5 7 7-7 7" />
-                    </svg> </a>
+                <a href="/about"
+                    class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex  items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-3 h-3 mr-2 fill-current">
+                        <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                    </svg>
+                    View All Articles
+                </a>
+
             </div>
         </section>
         <section class="container mx-auto px-4 py-10">
@@ -200,11 +202,15 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
             </div>
             <div class="mt-8">
                 <a href="#"
-                    class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex align-center">View
-                    All Events <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
-                        <path d="M5 12h14" />
-                        <path d="m12 5 7 7-7 7" />
-                    </svg> </a>
+                    class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-3 h-3 mr-2 fill-current">
+                        <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                    </svg>
+                    View All Events
+
+                </a>
+
             </div>
 
         </section>
@@ -217,12 +223,9 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
                     <div class="text-center md:text-left">
                         <h3 class="text-2xl font-bold text-purple-600 mb-2">Nurse Thandaza Tendai</h3>
                         <p class="text-gray-700 text-lg leading-relaxed mb-4">
-                            Tendai Mumba BSC Registered HIV nurse practitioner renowned HIV/NURSE advocate. I started this blog to share the accurate information, personal stories, and the last way findings about HIV/AIDS.
-                            My mission is to educate support and empower individuals living with HIV AND AIDS also encouraging people to take care of themselves and always know their status. To help teach the vision 2030 by World Health Organization of zero new HIV CASES </p>
-                        <a href="#"
-                            class="inline-block bg-purple-600 text-white font-medium py-2 px-6 rounded-lg shadow-lg transition-all hover:bg-purple-700">
-                            Learn more about Me
-                        </a>
+                            Tendai Mumba BSC, registered HIV nurse practitioner, renowned advocate, and HIV/NURSE leader. I started this blog to share accurate information, personal stories, and the latest findings about HIV/AIDS...
+                            <a href="/about.php#me" class="text-purple-600 font-medium hover:underline">Read more</a>
+                        </p>
                     </div>
                 </div>
             </div>

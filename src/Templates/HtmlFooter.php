@@ -1,6 +1,7 @@
 <?php
 
 namespace Muswalo\NurseTendiaBlog\Templates;
+use Muswalo\NurseTendiaBlog\Constants\Constants;
 
 /**
  * Class HtmlFooter
@@ -15,7 +16,11 @@ class HtmlFooter {
      */
     private string $url;
 
-
+    /**
+     * @var array Contacts information.
+     */
+    private array $contacts;
+    
     /**
      * Constructor for the HtmlFooter class.
      *
@@ -23,6 +28,7 @@ class HtmlFooter {
      */
     public function __construct(string $url) {
         $this->url = $url;
+        $this->contacts = Constants::CONTACTS;
     }
 
     /**
@@ -52,6 +58,7 @@ class HtmlFooter {
                         <li><a href="/about" class="hover:text-purple-200">About</a></li>
                         <li><a href="/blog" class="hover:text-purple-200">Blog</a></li>
                         <li><a href="/contact" class="hover:text-purple-200">Contact</a></li>
+                        <li><a href="/events" class="hover:text-purple-200">Events</a></li>
                     </ul>
                 </div>
                 <div>
@@ -65,8 +72,8 @@ class HtmlFooter {
                 </div>
                 <div>
                     <h3 class="text-xl font-semibold mb-4">Contact Us</h3>
-                    <p class="text-sm"><strong>Phone</strong>: +260973400223</p>
-                    <p class="text-sm"><strong>Email</strong>: me@nursetendia.com</p>
+                    <p class="text-sm"><strong>Phone</strong> {$this->contacts['phone']}</p>
+                    <p class="text-sm"><strong>Email</strong> {$this->contacts['email']}</p>
                     <br>
                     <strong>
                         <p>&copy; <?php echo date("Y"); ?> Nurse Tendai's Blog. All Rights Reserved.</p>

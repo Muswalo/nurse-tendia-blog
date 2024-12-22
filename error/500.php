@@ -16,7 +16,8 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
         Constants::SITE_URL,
         Constants::THEME_COLOR,
         "HIV, AIDS, Nurse Tendai",
-        "Nurse Tendai"
+        "Nurse Tendai",
+        Constants::SITE_URL."./500",
     );
     $head->render();
     ?>

@@ -2,6 +2,8 @@
 
 namespace Muswalo\NurseTendiaBlog\Templates;
 
+use Muswalo\NurseTendiaBlog\Constants\Constants;
+
 /**
  * Class HtmlSideBar
  *
@@ -18,12 +20,19 @@ class HtmlSideBar
     private string $url;
 
     /**
+     * @var array Contacts information.
+     */
+    private array $contacts;
+
+    /**
      * Constructor for the HtmlSideBar class.
      *
      * @param string $url The URL of the website.
      */
-    public function __construct(string $url) {
+    public function __construct(string $url)
+    {
         $this->url = $url;
+        $this->contacts = Constants::CONTACTS;
     }
 
     /**
@@ -91,7 +100,7 @@ class HtmlSideBar
             <div class="mt-8">
                 <h3 class="font-semibold text-lg text-bold mb-4">Connect</h3>
                 <ul class="space-y-2">
-                    <li><a href="#"
+                    <li><a href="{$this->contacts['facebook']}"
                             class="flex items-center space-x-4 text-white hover:bg-purple-700 p-2 px-6 rounded-lg">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -99,7 +108,7 @@ class HtmlSideBar
                                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                             </svg> <span>Facebook</span>
                         </a></li>
-                    <li><a href="#"
+                    <li><a href="{$this->contacts['instagram']}"
                             class="flex items-center space-x-4 text-white hover:bg-purple-700 p-2 px-6 rounded-lg">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -115,7 +124,7 @@ class HtmlSideBar
     </aside>
 
     <!-- Header -->
-    <header class="bg-purple-600 bg-opacity-90 backdrop-blur-md text-white fixed w-full z-10 lg:hidden h-16">
+    <header class="bg-purple-600 text-white fixed w-full z-10 lg:hidden h-16">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <a href="/" class="block">
                 <img src="./assets/logo.png" alt="Nurse Tendai's Blog Logo" class="w-20 h-auto">
@@ -134,7 +143,6 @@ class HtmlSideBar
 
         </div>
     </header>
-
     HTML;
     }
 }

@@ -44,6 +44,11 @@ class HTMLHead {
     private string $author;
 
     /**
+     * @var string The URL of the current page.
+     */
+    private $pageUrl;
+
+    /**
      * Constructor for the HTMLHead class.
      *
      * @param string $title       The title of the webpage.
@@ -53,6 +58,7 @@ class HTMLHead {
      * @param string $themeColor  The theme color for the browser.
      * @param string $keywords    The keywords for the webpage.
      * @param string  $author      The authors of the webpage.
+     * @param string $pageUrl     The URL of the current page.
      */
     public function __construct(
         string $title,
@@ -61,7 +67,8 @@ class HTMLHead {
         string $siteUrl,
         string $themeColor,
         string $keywords,
-        string $author
+        string $author,
+        string $pageUrl
     ) {
         $this->title = $title;
         $this->description = $description;
@@ -70,6 +77,7 @@ class HTMLHead {
         $this->themeColor = $themeColor;
         $this->keywords = $keywords;
         $this->author = $author;
+        $this->pageUrl = $pageUrl;
     }
 
     /**
@@ -87,7 +95,7 @@ class HTMLHead {
         <meta property="og:title" content="{$this->title}">
         <meta property="og:description" content="{$this->description}">
         <meta property="og:image" content="{$this->image}">
-        <meta property="og:url" content="{$this->siteUrl}">
+        <meta property="og:url" content="{$this->pageUrl}">
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="{$this->title}">
         <meta name="twitter:card" content="summary_large_image">
@@ -96,7 +104,7 @@ class HTMLHead {
         <meta name="twitter:image" content="{$this->image}">
         <meta name="keywords" content="{$this->keywords}">
         <meta name="author" content="{$this->author}">
-        <link rel="canonical" href="{$this->siteUrl}">
+        <link rel="canonical" href="{$this->pageUrl}">
         <link rel="apple-touch-icon" sizes="57x57" href="{$this->siteUrl}/assets/icons/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="{$this->siteUrl}/assets/icons/apple-icon-60x60.png">
         <link rel="apple-touch-icon" sizes="72x72" href="{$this->siteUrl}/assets/icons/apple-icon-72x72.png">
