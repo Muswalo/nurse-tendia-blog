@@ -6,6 +6,12 @@ use Muswalo\NurseTendiaBlog\Templates\HTMLFooter;
 use Muswalo\NurseTendiaBlog\Templates\HtmlSideBar;
 use Muswalo\NurseTendiaBlog\Constants\Constants;
 use Muswalo\NurseTendiaBlog\Components\Heading;
+use Muswalo\NurseTendiaBlog\Templates\PostCard;
+use Muswalo\NurseTendiaBlog\Templates\Post;
+use Muswalo\NurseTendiaBlog\Controllers\Controllers;
+use Muswalo\NurseTendiaBlog\Utils\Utils;
+
+$Controller = new Controllers();
 
 ?>
 
@@ -22,7 +28,7 @@ use Muswalo\NurseTendiaBlog\Components\Heading;
         Constants::THEME_COLOR,
         "HIV/AIDS blog, Nurse Tendai, HIV awareness, personal stories, HIV resources, healthcare, blog posts",
         "Nurse Tendai",
-        Constants::SITE_URL."/blog",
+        Constants::SITE_URL . "/blog",
     );
     $head->render();
     ?>
@@ -43,67 +49,37 @@ use Muswalo\NurseTendiaBlog\Components\Heading;
             <?php
             $heading = new Heading("My Latest Blog Posts and Insights", "Stay up-to-date with the latest news, research, and personal stories on HIV/AIDS. Learn about the latest advancements in treatment, prevention, and living positively with HIV.");
             $heading->render();
+
+            // Fetch data using the controller
+            $data = $Controller->getAllBlogPosts();
+            $data = Utils::transformData($data);
+
+            $PostCard = new PostCard();
+            $posts = array_map(function ($item) {
+                return new Post(
+                    $item['title'],
+                    $item['image'],
+                    $item['excerpt'],
+                    $item['author'],
+                    $item['date'],
+                    $item['id'],
+                    $item['link']
+                );
+            }, $data);
+            $renderedPosts = $PostCard::renderMultiple($posts);
+            if (preg_match('/<div class="grid gap-6 md:grid-cols-3">\s*<\/div>/', $renderedPosts)) {
+                echo <<<HTML
+                <div class="flex flex-col items-center justify-center">
+                    <img src="./assets/images/empty.svg" alt="No content available" class="w-64 h-auto mb-4">
+                    <p class="text-gray-700 text-center mb-4">No blog posts found yet. Stay tuned for updates.</p>
+                    <a href="/" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">Go to Home</a>
+                </div>
+                HTML;
+            } else {
+                echo $renderedPosts;
+            }
+
             ?>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Blog Post 1 -->
-                <article class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://via.placeholder.com/600x400" alt="Blog Post Image" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h2 class="text-xl font-semibold mb-2">Understanding HIV Transmission</h2>
-                        <p class="text-gray-700 text-base mb-4">Learn about the ways HIV can be transmitted and how to prevent it.</p>
-                        <a href="#" class="text-purple-600 hover:underline">Read More</a>
-                    </div>
-                </article>
-                <!-- Blog Post 2 -->
-                <article class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://via.placeholder.com/600x400" alt="Blog Post Image" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h2 class="text-xl font-semibold mb-2">Latest Advancements in AIDS Research</h2>
-                        <p class="text-gray-700 text-base mb-4">Explore the most recent breakthroughs in AIDS research and treatment.</p>
-                        <a href="#" class="text-purple-600 hover:underline">Read More</a>
-                    </div>
-                </article>
-                <!-- Blog Post 3 -->
-                <article class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://via.placeholder.com/600x400" alt="Blog Post Image" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h2 class="text-xl font-semibold mb-2">Living Positively with HIV</h2>
-                        <p class="text-gray-700 text-base mb-4">Personal stories and advice on living a fulfilling life with HIV.</p>
-                        <a href="#" class="text-purple-600 hover:underline">Read More</a>
-                    </div>
-                </article>
-
-                <!-- Blog Post 4   -->
-                <article class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://via.placeholder.com/600x400" alt="Blog Post Image" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h2 class="text-xl font-semibold mb-2">Understanding HIV Transmission</h2>
-                        <p class="text-gray-700 text-base mb-4">Learn about the ways HIV can be transmitted and how to prevent it.</p>
-                        <a href="#" class="text-purple-600 hover:underline">Read More</a>
-                    </div>
-                </article>
-
-                <!-- Blog Post 5 -->
-                <article class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://via.placeholder.com/600x400" alt="Blog Post Image" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h2 class="text-xl font-semibold mb-2">Latest Advancements in AIDS Research</h2>
-                        <p class="text-gray-700 text-base mb-4">Explore the most recent breakthroughs in AIDS research and treatment.</p>
-                        <a href="#" class="text-purple-600 hover:underline">Read More</a>
-                    </div>
-                </article>
-
-                <!-- Blog Post 6 -->
-                <article class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://via.placeholder.com/600x400" alt="Blog Post Image" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h2 class="text-xl font-semibold mb-2">Living Positively with HIV</h2>
-                        <p class="text-gray-700 text-base mb-4">Personal stories and advice on living a fulfilling life with HIV.</p>
-                        <a href="#" class="text-purple-600 hover:underline">Read More</a>
-                    </div>
-                </article>
-            </div>
 
         </main>
         <?php

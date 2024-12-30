@@ -38,3 +38,4 @@ function setActiveTab(page) {
 
 const currentPage = window.location.pathname;
 setActiveTab(currentPage);
+

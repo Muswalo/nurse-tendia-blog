@@ -126,4 +126,7 @@ composer.lock
 # PHPUnit
 .phpunit.result.cache
 
+#Uploads
+
+/uploads/
 # End of file

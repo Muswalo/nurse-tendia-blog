@@ -5,6 +5,14 @@ use Muswalo\NurseTendiaBlog\Templates\HTMLHead;
 use Muswalo\NurseTendiaBlog\Templates\HTMLFooter;
 use Muswalo\NurseTendiaBlog\Templates\HtmlSideBar;
 use Muswalo\NurseTendiaBlog\Constants\Constants;
+use Muswalo\NurseTendiaBlog\Templates\PostCard;
+use Muswalo\NurseTendiaBlog\Templates\Post;
+use Muswalo\NurseTendiaBlog\Controllers\Controllers;
+use Muswalo\NurseTendiaBlog\Templates\EventCard;
+use Muswalo\NurseTendiaBlog\Templates\Event;
+use Muswalo\NurseTendiaBlog\Utils\Utils;
+
+$Controller = new Controllers();
 
 ?>
 
@@ -89,40 +97,42 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
 
         <section class="container mx-auto px-4 py-10">
             <h2 class="text-3xl font-extrabold text-gray-800 mb-8">Featured Articles</h2>
-            <div class="grid gap-6 md:grid-cols-3">
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://via.placeholder.com/400x200" alt="Article Image" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-2">Understanding HIV Transmission</h3>
-                        <p class="text-gray-600 text-sm mb-4">Dr. Jane Smith</p>
-                        <p class="text-gray-700 mb-4">Learn about the ways HIV can be transmitted and how to prevent it.
-                        </p>
-                        <a href="#" class="text-purple-600 hover:underline">Read more</a>
-                    </div>
+
+            <?php
+
+            // Fetch data using the controller
+            $data = $Controller->getFeaturedBlogPosts();
+            $data = Utils::transformData($data);
+
+            $PostCard = new PostCard();
+            $posts = array_map(function ($item) {
+                return new Post(
+                    $item['title'],
+                    $item['image'],
+                    $item['excerpt'],
+                    $item['author'],
+                    $item['date'],
+                    $item['id'],
+                    $item['link'],
+                );
+            }, $data);
+
+            $renderedPosts = $PostCard::renderMultiple($posts);
+            if (preg_match('/<div class="grid gap-6 md:grid-cols-3">\s*<\/div>/', $renderedPosts)) {
+                echo <<<HTML
+                <div class="flex flex-col items-center justify-center">
+                    <img src="./assets/images/empty.svg" alt="No content available" class="w-64 h-auto mb-4">
+                    <p class="text-gray-700 text-center mb-4">No blog posts found yet. Stay tuned for updates.</p>
                 </div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://via.placeholder.com/400x200" alt="Article Image" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-2">Latest Advancements in AIDS Research</h3>
-                        <p class="text-gray-600 text-sm mb-4">Dr. Michael Johnson</p>
-                        <p class="text-gray-700 mb-4">Explore the most recent breakthroughs in AIDS research and
-                            treatment.</p>
-                        <a href="#" class="text-purple-600 hover:underline">Read more</a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://via.placeholder.com/400x200" alt="Article Image" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-2">Living Positively with HIV</h3>
-                        <p class="text-gray-600 text-sm mb-4">John Doe</p>
-                        <p class="text-gray-700 mb-4">Personal stories and advice on living a fulfilling life with HIV.
-                        </p>
-                        <a href="#" class="text-purple-600 hover:underline">Read more</a>
-                    </div>
-                </div>
-            </div>
+                HTML;
+            } else {
+                echo $renderedPosts;
+            }
+
+            ?>
+
             <div class="mt-8">
-                <a href="/about"
+                <a href="/blog"
                     class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex  items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-3 h-3 mr-2 fill-current">
                         <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -174,32 +184,38 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
         </section>
         <section class="container mx-auto px-4 py-10">
             <h2 class="text-3xl font-extrabold text-gray-800 mb-8">Upcoming Events</h2>
-            <div class="grid gap-6 md:grid-cols-3">
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">HIV Awareness Workshop</h3>
-                    <div class="flex items-start space-x-4">
-                        <p class="text-gray-700 mb-4 flex-1">Join us for an informative workshop on HIV awareness and prevention. Date: 25th December 2024</p>
-                        <img src="./assets/images/event1.jpeg" alt="Event image" class="w-20 h-20 rounded-md">
-                    </div>
-                    <a href="#" class="text-purple-600 hover:underline">Learn more</a>
+
+            <?php
+
+            // Fetch data using the controller
+            $data = $Controller->getFeaturedEvents();
+            $data = Utils::transformEventData($data);
+
+            $EventCard = new EventCard();
+
+            $events = array_map(function ($item) {
+                return new Event(
+                    $item['title'],
+                    $item['image'],
+                    $item['description'],
+                    $item['date'],
+                    $item['link'],
+                    $item['location'],
+                );
+            }, $data);
+
+            $renderedEvents = $EventCard::renderMultiple($events);
+            if (preg_match('/<div class="grid gap-6 md:grid-cols-3">\s*<\/div>/', $renderedEvents)) {
+                echo <<<HTML
+                <div class="flex flex-col items-center justify-center">
+                    <img src="./assets/images/empty.svg" alt="No content available" class="w-64 h-auto mb-4">
+                    <p class="text-gray-700 text-center mb-4">No events found yet. Stay tuned for updates.</p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">Community Support Group Meeting</h3>
-                    <div class="flex items-start space-x-4">
-                        <p class="text-gray-700 mb-4 flex-1">A support group meeting for individuals living with HIV. Date: 10th December 2023</p>
-                        <img src="./assets/images/event1.jpeg" alt="Event image" class="w-20 h-20 rounded-md">
-                    </div>
-                    <a href="#" class="text-purple-600 hover:underline">Learn more</a>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-semibold mb-2">Webinar on HIV Research</h3>
-                    <div class="flex items-start space-x-4">
-                        <p class="text-gray-700 mb-4 flex-1">An online webinar discussing the latest advancements in HIV research. Date: 15th January 2024</p>
-                        <img src="./assets/images/event1.jpeg" alt="Event image" class="w-20 h-20 rounded-md">
-                    </div>
-                    <a href="#" class="text-purple-600 hover:underline">Learn more</a>
-                </div>
-            </div>
+                HTML;
+            } else {
+                echo $renderedEvents;
+            }
+            ?>
             <div class="mt-8">
                 <a href="#"
                     class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex items-center">
@@ -224,7 +240,7 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
                         <h3 class="text-2xl font-bold text-purple-600 mb-2">Nurse Thandaza Tendai</h3>
                         <p class="text-gray-700 text-lg leading-relaxed mb-4">
                             Tendai Mumba BSC, registered HIV nurse practitioner, renowned advocate, and HIV/NURSE leader. I started this blog to share accurate information, personal stories, and the latest findings about HIV/AIDS...
-                            <a href="/about.php#me" class="text-purple-600 font-medium hover:underline">Read more</a>
+                            <a href="/about#me" class="text-purple-600 font-medium hover:underline">Read more</a>
                         </p>
                     </div>
                 </div>

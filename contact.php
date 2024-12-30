@@ -22,11 +22,12 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
         Constants::THEME_COLOR,
         "Contact, Nurse Tendai, HIV/AIDS, Blog, Support",
         "Nurse Tendai",
-        Constants::SITE_URL."/contact",
+        Constants::SITE_URL . "/contact",
     );
     $head->render();
     ?>
     <script src="js/main.js" defer></script>
+    <script src="js/contacts.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
 </head>
 
@@ -59,7 +60,7 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
                             </div>
                             <div>
                                 <span class="font-bold text-gray-700">Email</span>
-                                <a href="mailto:info@nurse-tendia-blog.com" class="text-purple-600 hover:underline block"><?php echo Constants::CONTACTS['email'];?></a>
+                                <a href="mailto:info@nurse-tendia-blog.com" class="text-purple-600 hover:underline block"><?php echo Constants::CONTACTS['email']; ?></a>
                             </div>
                         </li>
                         <li class="flex items-center">
@@ -76,7 +77,7 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
                         <li class="flex items-center">
                             <div class="bg-purple-100 p-2 rounded-full mr-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 text-purple-600">
-                                    <path fill-rule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 1.5.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
+                                    <path fill-rule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
                                 </svg>
                             </div>
                             <div>
@@ -104,7 +105,7 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
                             </div>
                             <div>
                                 <span class="font-bold text-gray-700">Facebook</span>
-                                <a href="<?php  echo Constants::CONTACTS["facebook"];?>" target="_blank" class="text-purple-600 hover:underline">Follow me on Facebook</a>
+                                <a href="<?php echo Constants::CONTACTS["facebook"]; ?>" target="_blank" class="text-purple-600 hover:underline">Follow me on Facebook</a>
                             </div>
                         </li>
                         <li class="flex items-center">
@@ -130,8 +131,12 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
                         I would love to hear from you, Please take a moment to fill in the form below and share your thoughts, questions, or feedback.
                         I'll do my best to get back to you as soon as possible.
                     </p>
-                    <form action="#" method="post">
+                    <form action="#" method="post" id="contact-form">
                         <div class="mb-6">
+                            <div id="error-viewer" class="bg-red-500 text-white p-3 rounded-md mb-4 text-center hidden">
+                                <span id="error-message">Error message</span>
+                            </div>
+                            
                             <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
                             <div class="flex items-center border border-gray-300 rounded-md focus-within:ring-purple-600 focus-within:border-purple-600">
                                 <span class="text-gray-500 px-4">
@@ -171,7 +176,7 @@ use Muswalo\NurseTendiaBlog\Constants\Constants;
                             </div>
                         </div>
 
-                        <button type="submit" class="bg-purple-600 text-white px-6 py-3 rounded-md w-full hover:bg-purple-700 focus:outline-none">Send Message</button>
+                        <button type="submit" class="bg-purple-600 text-white px-6 py-3 rounded-md w-full hover:bg-purple-700 focus:outline-none" id="submit-button">Send Message</button>
                     </form>
                 </div>
 
