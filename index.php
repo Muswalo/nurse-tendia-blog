@@ -11,7 +11,10 @@ use Muswalo\NurseTendiaBlog\Controllers\Controllers;
 use Muswalo\NurseTendiaBlog\Templates\EventCard;
 use Muswalo\NurseTendiaBlog\Templates\Event;
 use Muswalo\NurseTendiaBlog\Utils\Utils;
+use Muswalo\NurseTendiaBlog\Controllers\Monitor;
 
+$Monitor = new Monitor();
+$Monitor->monitor();
 $Controller = new Controllers();
 
 ?>

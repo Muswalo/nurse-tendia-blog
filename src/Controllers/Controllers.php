@@ -363,15 +363,16 @@ class Controllers
      *
      * @param int $user_id The ID of the user.
      *
-     * @return void
+     * @return int the record id
      */
-    public function createMetric($user_id)
+    public function createMetric()
     {
-        $sql = "INSERT INTO metrics (user_id) VALUES (:user_id)";
+        $sql = "INSERT INTO metrics (times_visited) VALUES (:time_visited)";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['user_id' => $user_id]);
+        $stmt->execute(['time_visited' => 1]);
+        return $this->db->lastInsertId();
     }
-
+    
     /**
      * Retrieves a metric from the database by ID.
      *

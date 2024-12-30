@@ -6,6 +6,11 @@ use Muswalo\NurseTendiaBlog\Templates\HTMLFooter;
 use Muswalo\NurseTendiaBlog\Templates\HtmlSideBar;
 use Muswalo\NurseTendiaBlog\Constants\Constants;
 use Muswalo\NurseTendiaBlog\Components\Heading;
+use Muswalo\NurseTendiaBlog\Controllers\Monitor;
+
+$Monitor = new Monitor();
+$Monitor->monitor();
+
 ?>
 
 <!DOCTYPE html>

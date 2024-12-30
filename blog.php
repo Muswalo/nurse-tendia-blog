@@ -10,6 +10,10 @@ use Muswalo\NurseTendiaBlog\Templates\PostCard;
 use Muswalo\NurseTendiaBlog\Templates\Post;
 use Muswalo\NurseTendiaBlog\Controllers\Controllers;
 use Muswalo\NurseTendiaBlog\Utils\Utils;
+use Muswalo\NurseTendiaBlog\Controllers\Monitor;
+
+$Monitor = new Monitor();
+$Monitor->monitor();
 
 $Controller = new Controllers();
 
