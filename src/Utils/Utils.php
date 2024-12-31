@@ -2,6 +2,8 @@
 
 namespace Muswalo\NurseTendiaBlog\Utils;
 
+use Muswalo\NurseTendiaBlog\Constants\Constants;
+
 class Utils
 {
     /**
@@ -147,12 +149,13 @@ class Utils
                 "author" => $item["author"] ?? "",
                 "excerpt" => self::generateExcerpt($item["content"] ?? "", 100),
                 "image" => $item["image_url"] ?? "",
-                "link" => "#",
+                "link" => Constants::SITE_URL . "/view?id=" . $item["id"],
                 "date" => isset($item["created_at"]) ? date("F d, Y", strtotime($item["created_at"])) : "",
                 "id" => $item["id"] ?? "",
                 "isFeatured" => $item["featured"] ?? false,
                 "reads" => $item["views"] ?? "",
                 "description" => self::generateExcerpt($item["description"] ?? "", 90) ?? "",
+                "admin_article_link" => Constants::SITE_URL . "/admin/manage?id=" . $item["id"]
             ];
         }
 
@@ -171,11 +174,12 @@ class Utils
 
         foreach ($data as $item) {
             $transformedData[] = [
+                "id" => $item["id"] ?? "",
                 "title" => $item["title"] ?? "",
                 "image" => $item["image_url"] ?? "",
                 "description" => self::generateExcerpt($item["description"], 90) ?? "",
                 "date" => isset($item["date"]) ? date("F d, Y", strtotime($item["date"])) : "",
-                "link" => "#",
+                "link" => Constants::SITE_URL . "/view_event.php?id=" . $item["id"],
                 "location" => $item["location"],
             ];
         }

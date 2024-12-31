@@ -72,7 +72,7 @@ class Controllers
         $stmt->execute(['id' => $id, 'username' => $username, 'password' => password_hash($password, PASSWORD_DEFAULT)]);
     }
 
-        /**
+    /**
      * Retrieves a user from the database by username.
      *
      * @param string $username The username of the user.
@@ -131,6 +131,52 @@ class Controllers
     }
 
     /**
+     * Updates a blog post in the database.
+     *
+     * @param int    $id       The ID of the blog post.
+     * @param string $title    The title of the blog post.
+     * @param string $content  The content of the blog post.
+     * @param string $author   The author of the blog post.
+     * @param string|null $image_url The URL of the image for the blog post.
+     * @param string|null $slug The slug of the blog post.
+     * @param string|null $excerpt The excerpt of the blog post.
+     *
+     * @return void
+     */
+
+    public function updateBlogPost($id, $title, $content, $author, $featured, $image_url = null)
+    {
+        try {
+            $sql = "UPDATE blog_posts 
+                    SET title = :title, 
+                        content = :content, 
+                        author = :author, 
+                        featured = :featured";
+            
+            $params = [
+                'id' => $id,
+                'title' => $title,
+                'content' => $content,
+                'author' => $author,
+                'featured' => $featured,
+            ];
+    
+            if ($image_url !== null) {
+                $sql .= ", image_url = :image_url";
+                $params['image_url'] = $image_url;
+            }
+    
+            $sql .= " WHERE id = :id";
+    
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute($params);
+        } catch (PDOException $e) {
+            error_log("Database update error: " . $e->getMessage());
+        }
+    }
+    
+
+    /**
      * Retrieves a blog post from the database by ID.
      *
      * @param int $id The ID of the blog post.
@@ -158,33 +204,6 @@ class Controllers
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Updates a blog post in the database.
-     *
-     * @param int    $id       The ID of the blog post.
-     * @param string $title    The title of the blog post.
-     * @param string $content  The content of the blog post.
-     * @param string $author   The author of the blog post.
-     * @param string|null $image_url The URL of the image for the blog post.
-     * @param string|null $slug The slug of the blog post.
-     * @param string|null $excerpt The excerpt of the blog post.
-     *
-     * @return void
-     */
-    public function updateBlogPost($id, $title, $content, $author, $image_url = null, $slug = null, $excerpt = null)
-    {
-        $sql = "UPDATE blog_posts SET title = :title, content = :content, author = :author, image_url = :image_url, slug = :slug, excerpt = :excerpt WHERE id = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([
-            'id' => $id,
-            'title' => $title,
-            'content' => $content,
-            'author' => $author,
-            'image_url' => $image_url,
-            'slug' => $slug,
-            'excerpt' => $excerpt
-        ]);
-    }
 
     /**
      * Deletes a blog post from the database.
@@ -210,7 +229,7 @@ class Controllers
      */
     public function setBlogPostFeatured($id, $featured)
     {
-        $featured = $featured ? 1 : 0; 
+        $featured = $featured ? 1 : 0;
         $sql = "UPDATE blog_posts SET featured = :featured WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $id, 'featured' => $featured]);
@@ -230,6 +249,51 @@ class Controllers
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    /**
+     * Retrieves suggested posts for a given post ID.
+     *
+     * @param int $currentPostId The ID of the current post.
+     * @param int $limit The maximum number of suggested posts to retrieve.
+     *
+     * @return array An array of suggested post data.
+     */
+
+    public function getSuggestedPosts($currentPostId, $limit = 3)
+    {
+        try {
+
+            $sql = "SELECT * FROM blog_posts WHERE id != :currentPostId ORDER BY created_at DESC LIMIT :limit";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue(':currentPostId', $currentPostId, \PDO::PARAM_INT);
+            $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            var_dump($e);
+            return [];
+        }
+    }
+
+    /**
+     * Increments the view count for a blog post.
+     *
+     * @param int $postId The ID of the blog post.
+     *
+     * @return void
+     * @throws PDOException If a database error occurs.
+     */
+    public function incrementPostViews(int $postId): void
+    {
+        try {
+            $sql = "UPDATE blog_posts SET views = views + 1 WHERE id = :postId";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue(':postId', $postId, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Database Error (incrementPostViews): " . $e->getMessage());
+        }
+    }
 
     // Events CRUD operations
 
@@ -314,7 +378,7 @@ class Controllers
     }
 
 
-     /**
+    /**
      * Sets an event as featured or not featured.
      *
      * @param int  $id The ID of the event.
@@ -337,25 +401,26 @@ class Controllers
      */
     public function getFeaturedEvents()
     {
-        $sql = "SELECT * FROM events WHERE featured = 1 ORDER BY `created_at` ASC"; 
+        $sql = "SELECT * FROM events WHERE featured = 1 ORDER BY `created_at` ASC";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-     /**
+    /**
      * Removes the "featured" status from an event.
      *
      * @param int $id The ID of the event.
      *
      * @return void
      */
-    public function removeEventFeatured($id) {
+    public function removeEventFeatured($id)
+    {
         $sql = "UPDATE events SET featured = 0 WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $id]);
     }
-    
+
     // Metrics CRUD operations
 
     /**
@@ -372,7 +437,7 @@ class Controllers
         $stmt->execute(['time_visited' => 1]);
         return $this->db->lastInsertId();
     }
-    
+
     /**
      * Retrieves a metric from the database by ID.
      *
@@ -501,11 +566,11 @@ class Controllers
             return (int)$stmt->fetchColumn();
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());
-            return 0; 
+            return 0;
         }
     }
 
-    
+
     /**
      * Counts the number of rows in the 'blog_posts' table.
      *

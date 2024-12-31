@@ -136,7 +136,7 @@ $controller = new Controllers();
                         $item['title'],
                         $item['image'],
                         $item['excerpt'],
-                        $item['link'],
+                        $item['admin_article_link'],
                         $item['reads'],
                         $item['isFeatured'],
                     );

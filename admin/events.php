@@ -36,7 +36,6 @@ $controller = new Controllers();
     $head->render();
     ?>
     <script src="../js/main.js" defer></script>
-    <script src="js/articles.js" defer></script>
     <script src="js/side-bar.js" defer></script>
 </head>
 

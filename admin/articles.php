@@ -36,8 +36,8 @@ $controller = new Controllers();
     $head->render();
     ?>
     <script src="../js/main.js" defer></script>
-    <script src="js/articles.js" defer></script>
     <script src="js/side-bar.js" defer></script>
+    <script src="js/home.js" defer></script>
 </head>
 
 <body class="bg-gray-100">
@@ -64,7 +64,7 @@ $controller = new Controllers();
                     $item['title'],
                     $item['image'],
                     $item['excerpt'],
-                    $item['link'],
+                    $item['admin_article_link'],
                     $item['reads'],
                     $item['isFeatured'],
                 );

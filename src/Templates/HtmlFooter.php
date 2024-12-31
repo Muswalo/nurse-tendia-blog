@@ -44,7 +44,7 @@ class HtmlFooter {
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <a href="/">
-                        <img src="{$this->url}./assets/logo.png" alt="Logo" class="mb-4 w-32 h-auto">
+                        <img src="/assets/logo.png" alt="Logo" class="mb-4 w-32 h-auto">
                     </a>
                     <h3 class="text-xl font-semibold mb-4">About Us</h3>
                     <p class="text-sm">

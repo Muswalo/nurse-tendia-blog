@@ -127,6 +127,8 @@ composer.lock
 .phpunit.result.cache
 
 #Uploads
-
 /uploads/
+
+#mirror_html
+/mirror_html/
 # End of file
