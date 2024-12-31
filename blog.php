@@ -48,7 +48,7 @@ $Controller = new Controllers();
     ?>
 
     <div class="lg:ml-64 pt-16 lg:-mt-16">
-        <main class="container mx-auto px-4 py-10">
+        <main class="container mx-auto px-4 py-10" id="main-content">
 
             <?php
             $heading = new Heading("My Latest Blog Posts and Insights", "Stay up-to-date with the latest news, research, and personal stories on HIV/AIDS. Learn about the latest advancements in treatment, prevention, and living positively with HIV.");

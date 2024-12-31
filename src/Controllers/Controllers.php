@@ -356,13 +356,34 @@ class Controllers
      *
      * @return void
      */
-    public function updateEvent($id, $title, $description, $date, $location,  $image_url = null)
+    public function updateEvent($id, $title, $description, $date, $location, $featured ,$image_url = null)
     {
-        $sql = "UPDATE events SET title = :title, description = :description, date = :date, location = :location, image_url = :image_url WHERE id = :id";
+        $sql = "UPDATE events SET `title` = :title, `description` = :description, `date` = :date, `location` = :location, `featured` = :featured";
+    
+        if ($image_url !== null) {
+            $sql .= ", image_url = :image_url";
+        }
+    
+        $sql .= " WHERE id = :id";
+    
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['id' => $id, 'title' => $title, 'description' => $description, 'date' => $date, 'location' => $location, 'image_url' => $image_url]);
+    
+        $params = [
+            'id' => $id,
+            'title' => $title,
+            'description' => $description,
+            'date' => $date,
+            'location' => $location,
+            'featured' => $featured
+        ];
+    
+        if ($image_url !== null) {
+            $params['image_url'] = $image_url;
+        }
+    
+        $stmt->execute($params);
     }
-
+    
     /**
      * Deletes an event from the database.
      *

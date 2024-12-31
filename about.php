@@ -41,7 +41,7 @@ $Monitor->monitor();
     ?>
 
     <div class="lg:ml-64 pt-16 lg:-mt-16">
-        <main class="container mx-auto px-4 py-10">
+        <main class="container mx-auto px-4 py-10" id="main-content">
             <!-- Hero Section -->
              <?php
              $heading = new Heading ("About Nurse Tendai's Blog", "Empowering lives through education, awareness, and support for individuals affected by HIV and AIDS.");

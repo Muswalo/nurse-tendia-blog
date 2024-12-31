@@ -50,7 +50,7 @@ $controller = new Controllers();
     ?>
 
     <div class="lg:ml-64 pt-16 lg:-mt-16">
-        <main class="container mx-auto p-4">
+        <main class="container mx-auto p-4" id="main-content">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <?php
                 // Create an instance of the Analytics object

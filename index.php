@@ -46,7 +46,7 @@ $Controller = new Controllers();
     $sidebar->render();
     ?>
 
-    <div class="lg:ml-64 pt-16 lg:-mt-16">
+    <div class="lg:ml-64 pt-16 lg:-mt-16" id="main-content">
         <!-- Hero Section -->
         <section class="relative">
             <div class="absolute inset-0">

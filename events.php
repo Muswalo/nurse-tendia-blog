@@ -47,7 +47,7 @@ $Controller = new Controllers();
     ?>
 
     <div class="lg:ml-64 pt-16 lg:-mt-16">
-        <main class="container mx-auto px-4 py-10">
+        <main class="container mx-auto px-4 py-10" id="main-content">
 
             <?php
             $heading = new Heading("Upcoming Events", "Stay informed about upcoming events related to HIV/AIDS awareness and support.  Join us for workshops, webinars, and community gatherings.");

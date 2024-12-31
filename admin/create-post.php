@@ -47,7 +47,7 @@ $controller = new Controllers();
     ?>
 
     <div class="lg:ml-64 pt-16 lg:-mt-16">
-        <main class="container mx-auto p-4">
+        <main class="container mx-auto p-4" id="main-content">
             <?php
             $Heading = new Heading("Create New Article", "Ensure the description is concise, includes relevant keywords, and accurately represents the page content.");
             $Heading->render();

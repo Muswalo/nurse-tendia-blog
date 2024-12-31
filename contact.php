@@ -43,7 +43,7 @@ $Monitor->monitor();
     ?>
 
     <div class="lg:ml-64 pt-16 lg:-mt-16">
-        <main class="container mx-auto px-4 py-10">
+        <main class="container mx-auto px-4 py-10" id="main-content">
             <?php
             $heading = new Heading("Get in Touch, I’d Love to Hear From You", " I’d love to hear from you! Use the form below to share your questions, feedback, or thoughts, and I’ll do my best to respond promptly.");
             $heading->render();

@@ -28,11 +28,14 @@ $event = $controller->getEvent($eventId);
 
 <head>
     <?php
-    http_response_code(404);
     $title = "Event Not Found";
     $description = "The requested event was not found.";
     $imageUrl = Constants::DEFAULT_IMAGE;
     $canonicalUrl = Constants::SITE_URL . "/events";
+    
+    if (!$post) {
+        http_response_code(404);
+    }
 
     if ($event) {
         $title = htmlspecialchars($event['title']);
@@ -64,7 +67,7 @@ $event = $controller->getEvent($eventId);
     $sidebar->render();
     ?>
     <div class="lg:ml-64 pt-16 lg:-mt-16">
-        <main class="container mx-auto px-6 lg:px-12 py-10">
+        <main class="container mx-auto px-6 lg:px-12 py-10" id="main-content">
             <?php if ($event): ?>
                 <article>
                     <h1 class="text-5xl font-extrabold text-gray-800 mb-4"><?php echo htmlspecialchars($event['title']); ?></h1>
