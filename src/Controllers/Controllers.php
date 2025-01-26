@@ -128,6 +128,8 @@ class Controllers
             'image_url' => $image_url,
             'featured' => $featured,
         ]);
+        // Return the ID of the newly inserted blog post
+        return $this->db->lastInsertId();
     }
 
     /**

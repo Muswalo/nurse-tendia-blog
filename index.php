@@ -251,7 +251,7 @@ $Controller = new Controllers();
             </div>
         </section>
 
-        <div id="newsLetter-popup" class="hidden fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50">
+        <div id="newsletter-popup" class="hidden fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50">
             <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
                 <button type="button" id="close-popup" class="absolute top-2 right-2 bg-gray-200 rounded-full p-1 hover:bg-gray-300 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

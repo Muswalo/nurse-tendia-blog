@@ -2,7 +2,7 @@ const newsLetterForm = document.getElementById('newsLetter-form');
 const newsLetterEmailInput = document.getElementById('newsLetter-email');
 const newsLetterSubmitButton = document.getElementById('newsLetter-submit');
 const newsLetterNameInput = document.getElementById('newsLetter-name');
-const newsLetterPopUp = document.getElementById('newsLetter-popup');
+const newsLetterPopUp = document.getElementById('newsletter-popup');
 
 newsLetterForm.addEventListener('submit', async (event) => {
     event.preventDefault();

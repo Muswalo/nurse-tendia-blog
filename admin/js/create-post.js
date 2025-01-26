@@ -127,7 +127,6 @@ form.addEventListener("submit", async (event) => {
       showToast(result.message || "An error occurred.", "error");
     }
   } catch (error) {
-    console.error(error)
     showToast("Failed to create post. Please try again.", "error");
   } finally {
     resetSubmitButton();
