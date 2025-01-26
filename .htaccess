@@ -1,6 +1,10 @@
 # Enable URL rewriting
 RewriteEngine On
 
+# Redirect www to non-www with 301
+RewriteCond %{HTTP_HOST} ^www\.nursetendai\.com$ [NC]
+RewriteRule ^(.*)$ https://nursetendai.com/$1 [L,R=301]
+
 # Handle missing file extensions
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

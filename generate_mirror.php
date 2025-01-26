@@ -7,6 +7,14 @@ $phpFiles = [
     'contact.php',
     'blog.php',
     'events.php',
+    'admin/articles.php',
+    'admin/create-event.php',
+    'admin/create-post.php',
+    'admin/events1.php',
+    'admin/home.php',
+    'admin/index.php',
+    'admin/manage_event.php',
+    'admin/manage.php'
 ];
 
 $outputDir = __DIR__ . '/mirror_html';

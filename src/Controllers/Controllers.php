@@ -152,7 +152,7 @@ class Controllers
                         content = :content, 
                         author = :author, 
                         featured = :featured";
-            
+
             $params = [
                 'id' => $id,
                 'title' => $title,
@@ -160,21 +160,21 @@ class Controllers
                 'author' => $author,
                 'featured' => $featured,
             ];
-    
+
             if ($image_url !== null) {
                 $sql .= ", image_url = :image_url";
                 $params['image_url'] = $image_url;
             }
-    
+
             $sql .= " WHERE id = :id";
-    
+
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
         } catch (PDOException $e) {
             error_log("Database update error: " . $e->getMessage());
         }
     }
-    
+
 
     /**
      * Retrieves a blog post from the database by ID.
@@ -356,18 +356,18 @@ class Controllers
      *
      * @return void
      */
-    public function updateEvent($id, $title, $description, $date, $location, $featured ,$image_url = null)
+    public function updateEvent($id, $title, $description, $date, $location, $featured, $image_url = null)
     {
         $sql = "UPDATE events SET `title` = :title, `description` = :description, `date` = :date, `location` = :location, `featured` = :featured";
-    
+
         if ($image_url !== null) {
             $sql .= ", image_url = :image_url";
         }
-    
+
         $sql .= " WHERE id = :id";
-    
+
         $stmt = $this->db->prepare($sql);
-    
+
         $params = [
             'id' => $id,
             'title' => $title,
@@ -376,14 +376,14 @@ class Controllers
             'location' => $location,
             'featured' => $featured
         ];
-    
+
         if ($image_url !== null) {
             $params['image_url'] = $image_url;
         }
-    
+
         $stmt->execute($params);
     }
-    
+
     /**
      * Deletes an event from the database.
      *
@@ -606,6 +606,70 @@ class Controllers
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());
             return 0;
+        }
+    }
+
+    // ******** new letter methods
+
+    /**
+     * Subscribes an email with a name to the newsletter.
+     *
+     * @param string $email The email address to subscribe.
+     * @param string $name The name of the subscriber.
+     * @return bool True if subscription was successful, false otherwise.
+     */
+    public function subscribeWithName(string $email, string $name): bool
+    {
+        try {
+            $sql = "SELECT 1 FROM newsletter_subscribers WHERE LOWER(email) = LOWER(:email)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(['email' => $email]);
+
+            if ($stmt->fetchColumn()) {
+                return false;
+            }
+            $sql = "INSERT INTO newsletter_subscribers (email, name) VALUES (:email, :name)";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute(['email' => $email, 'name' => $name]);
+        } catch (PDOException $e) {
+            error_log("Database Error (subscribeWithName): " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Retrieves all unsubscribed emails from the newsletter_subscribers table.
+     *
+     * @return array An array of unsubscribed email addresses.
+     */
+    public function getAllUnsubscribedEmails(): array
+    {
+        try {
+            $sql = "SELECT email FROM newsletter_subscribers WHERE is_subscribed = FALSE";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_COLUMN);
+        } catch (PDOException $e) {
+            error_log("Database Error (getAllUnsubscribedEmails): " . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
+     * Retrieves all subscribed names and emails from the newsletter_subscribers table.
+     *
+     * @return array An array of associative arrays containing 'name' and 'email' of subscribed users.
+     */
+    public function getAllSubscribedNamesAndEmails(): array
+    {
+        try {
+            $sql = "SELECT name, email FROM newsletter_subscribers WHERE is_subscribed = TRUE";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Database Error (getAllSubscribedNamesAndEmails): " . $e->getMessage());
+            return [];
         }
     }
 }

@@ -161,11 +161,12 @@ $suggestedPosts = $controller->getSuggestedPosts($postId);
     </div>
 </body>
 <script>
-    const copyButton = document.getElementById('copyButton');
     const textToShare = "<?php echo $canonicalUrl; ?>"; 
     const title = "<?php echo $title; ?>";
+    const copyButton = document.getElementById('copyButton');
 
     copyButton.addEventListener('click', () => {
+        console.log ("Emmanuel is awesome");
         if (navigator.share) {
             navigator.share({
                 title: title,

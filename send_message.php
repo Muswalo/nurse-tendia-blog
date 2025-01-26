@@ -2,7 +2,6 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 use Muswalo\NurseTendiaBlog\Utils\Utils;
-use Muswalo\NurseTendiaBlog\Constants\Constants;
 use Muswalo\NurseTendiaBlog\Database\Database;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

@@ -37,6 +37,7 @@ $Controller = new Controllers();
     $head->render();
     ?>
     <script src="js/main.js" defer></script>
+    <script src="js/newsletter.js" defer></script>
 </head>
 
 <body class="bg-gray-100">
@@ -54,7 +55,7 @@ $Controller = new Controllers();
                     class="w-full h-full object-cover">
             </div>
             <div class="relative container mx-auto px-4 py-20 text-left">
-                <h2 class="text-white text-4xl font-bold">Nurse Tendia's HIV/AIDS Awareness Blog</h2>
+                <h1 class="text-white text-4xl font-bold">Nurse Tendia's HIV/AIDS Awareness Blog</h1>
                 <div class="absolute bottom-4 left-4">
                     <a href="/about#about"
                         class="bg-white text-purple-600 font-semibold py-2 px-4 rounded hover:bg-purple-200 flex">
@@ -179,7 +180,7 @@ $Controller = new Controllers();
                         class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-105">
                     <div
                         class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                        <h3 class="text-white text-2xl font-semibold mb-2">Awesome achivement by miss tendia</h3>
+                        <h3 class="text-white text-2xl font-semibold mb-2">Awesome achievement by miss tendia</h3>
                         <p class="text-gray-300 text-center text-sm px-4">Description of project 3 This will be another thing she has achieved so far</p>
                     </div>
                 </div>
@@ -220,7 +221,7 @@ $Controller = new Controllers();
             }
             ?>
             <div class="mt-8">
-                <a href="#"
+                <a href="/events"
                     class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-3 h-3 mr-2 fill-current">
                         <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -249,11 +250,46 @@ $Controller = new Controllers();
                 </div>
             </div>
         </section>
+
+        <div id="newsLetter-popup" class="hidden fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+                <button type="button" id="close-popup" class="absolute top-2 right-2 bg-gray-200 rounded-full p-1 hover:bg-gray-300 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <form id="newsLetter-form">
+                    <h3 class="text-xl font-semibold mb-4">Stay Updated with Nurse Tendai</h3>
+                    <p class="text-gray-700 mb-4">Subscribe to receive email notifications whenever a new article is published.</p>
+                    <input type="text" name="name" placeholder="Enter your name" class="w-full p-2 border rounded mb-2" id="newsLetter-name">
+                    <input type="email" name="email" placeholder="Enter your email" class="w-full p-2 border rounded mb-2" id="newsLetter-email">
+                    <button type="submit" class="bg-purple-600 text-white p-2 rounded w-full" id="newsLetter-submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
         <?php
         $footer = new HTMLFooter(Constants::SITE_URL);
         $footer->render();
         ?>
     </div>
 </body>
+<script>
+    function showPopup() {
+        const popup = document.getElementById('newsletter-popup');
+        popup.classList.remove('hidden');
+        document.cookie = "popupShown=true; path=/";
+    }
+
+
+    window.addEventListener('scroll', () => {
+        if (document.cookie.indexOf('popupShown=true') === -1 && window.scrollY > 500) {
+            showPopup();
+        }
+    });
+
+    document.getElementById('close-popup').addEventListener('click', () => {
+        document.getElementById('newsletter-popup').classList.add('hidden');
+    });
+</script>
 
 </html>

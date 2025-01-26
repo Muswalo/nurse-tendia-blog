@@ -42,7 +42,7 @@ $controller = new Controllers();
 
 <body class="bg-gray-100">
     <?php
-    $sidebar = new HtmlSideBar(Constants::SITE_URL);
+    $sidebar = new HtmlSideBar(Constants::SITE_URL, "Tendia Mumba");
     $sidebar->render();
     ?>
 
