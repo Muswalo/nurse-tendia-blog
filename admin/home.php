@@ -220,31 +220,9 @@ $controller = new Controllers();
             </section>
 
         </main>
-        <div id="newsletter-popup" class="hidden fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-                <form action="/your-signup-script.php" method="post">
-                    <h3 class="text-xl font-semibold mb-4">Subscribe to our newsletter</h3>
-                    <input type="email" name="email" placeholder="Enter your email" class="w-full p-2 border rounded mb-2">
-                    <button type="submit" class="bg-purple-600 text-white p-2 rounded">Subscribe</button>
-                    <button type="button" id="close-popup" class="text-gray-500 mt-2">Close</button>
-                </form>
-
-            </div>
-        </div>
+    </div>
 
 
 </body>
-
-<script>
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 200) {
-            document.getElementById('newsletter-popup').classList.remove('hidden');
-        }
-    });
-
-    document.getElementById('close-popup').addEventListener('click', () => {
-        document.getElementById('newsletter-popup').classList.add('hidden');
-    });
-</script>
 
 </html>
