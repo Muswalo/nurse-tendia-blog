@@ -674,4 +674,128 @@ class Controllers
             return [];
         }
     }
+
+
+        // Video CRUD operations
+
+    /**
+     * Creates a new video record in the database.
+     *
+     * @param string $title The title of the video.
+     * @param string $thumbnail The URL/path to the video thumbnail.
+     * @param string|null $altText The alternative text for the thumbnail.
+     * @param string|null $description A description of the video.
+     * @param int|null $duration The duration of the video in minutes (optional).
+     * @param string $videoFile The URL/path to the video file.
+     *
+     * @return int|false The ID of the newly inserted video on success, false on failure.
+     */
+    public function createVideo(string $title, string $thumbnail,?string $description, ?int $duration, string $videoFile, int $featured): int|false
+    {
+        try {
+            $sql = "INSERT INTO videos (title, thumbnail, alt_text, description, duration, video_file, featured) 
+                    VALUES (:title, :thumbnail, :altText, :description, :duration, :videoFile, :featured)";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                'title' => $title,
+                'thumbnail' => $thumbnail,
+                'altText' => $description,
+                'description' => $description,
+                'duration' => $duration,
+                'videoFile' => $videoFile,
+                'featured' => $featured
+            ]);
+
+            return $this->db->lastInsertId(); 
+        } catch (PDOException $e) {
+            error_log("Database error (createVideo): " . $e->getMessage());
+            return false;
+        }
+    }
+
+
+    /**
+     * Retrieves all videos from the database.
+     *
+     * @return array An array of video data, or an empty array if no videos are found.
+     */
+    public function getAllVideos(): array
+    {
+        try {
+            $sql = "SELECT * FROM videos";
+            $stmt = $this->db->query($sql);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Database error (getAllVideos): " . $e->getMessage());
+            return []; 
+        }
+    }
+
+
+    /**
+     * Get video by a particular id
+     * @param int $id
+     * @return array|false
+     */
+    public function getVideoById(int $id): array|false
+    {
+        try {
+
+            $sql = "SELECT * FROM videos WHERE id=:id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+
+            error_log("Database Error (getVideoId): " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Update a video
+     */
+
+    public function updateVideo($id, $title, $thumbnail, $altText, $description, $duration, $videoFile): bool
+    {
+        try {
+            $sql = "UPDATE videos SET title = :title, thumbnail = :thumbnail, alt_text=:altText, description=:description, duration=:duration, video_file = :videoFile WHERE id = :id";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([
+                'id' => $id,
+                'title' => $title,
+                'thumbnail' => $thumbnail,
+                'altText' => $altText,
+                'description' => $description,
+                'duration' => $duration,
+                'videoFile' => $videoFile,
+            ]);
+        } catch (PDOException $e) {
+            error_log("Database error (createVideo): " . $e->getMessage());
+            return false;
+        }
+    }
+
+
+    /**
+     * Deletes a video from the database by its ID.
+     *
+     * @param int $id The ID of the video to delete.
+     * @return bool True if the deletion was successful, false otherwise.
+     */
+    public function deleteVideo(int $id): bool
+    {
+        try {
+            $sql = "DELETE FROM videos WHERE id = :id";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute(['id' => $id]);
+        } catch (PDOException $e) {
+            error_log("Database error (deleteVideo): " . $e->getMessage());
+            return false;
+        }
+    }
+
+
 }
