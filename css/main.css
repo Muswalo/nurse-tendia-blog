@@ -1,0 +1,16 @@
+#video-modal {
+    transition: opacity 0.3s ease;
+}
+
+#video-modal:not(.hidden) {
+    opacity: 1;
+}
+
+#video-modal .modal-content {
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+#video-modal:not(.hidden) .modal-content {
+    transform: scale(1);
+}
