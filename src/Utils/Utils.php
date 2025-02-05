@@ -155,7 +155,11 @@ class Utils
                 "isFeatured" => $item["featured"] ?? false,
                 "reads" => $item["views"] ?? "",
                 "description" => self::generateExcerpt($item["description"] ?? "", 90) ?? "",
-                "admin_article_link" => Constants::SITE_URL . "/admin/manage?id=" . $item["id"]
+                "admin_article_link" => Constants::SITE_URL . "/admin/manage?id=" . $item["id"],
+                "thumbnail" => $item["thumbnail"] ?? "",
+                "altText" => $item["alt_text"] ?? "",
+                "duration" => $item["duration"] ?? "",
+                "videoSrc" => $item["video_file"] ?? "",
             ];
         }
 
