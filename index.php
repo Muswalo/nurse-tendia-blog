@@ -10,6 +10,8 @@ use Muswalo\NurseTendiaBlog\Templates\Post;
 use Muswalo\NurseTendiaBlog\Controllers\Controllers;
 use Muswalo\NurseTendiaBlog\Templates\EventCard;
 use Muswalo\NurseTendiaBlog\Templates\Event;
+use Muswalo\NurseTendiaBlog\Templates\VideoCard;
+use Muswalo\NurseTendiaBlog\Templates\Video;
 use Muswalo\NurseTendiaBlog\Utils\Utils;
 use Muswalo\NurseTendiaBlog\Controllers\Monitor;
 
@@ -36,6 +38,7 @@ $Controller = new Controllers();
     );
     $head->render();
     ?>
+    <link rel="stylesheet" href="css/main.css">
     <script src="js/main.js" defer></script>
     <script src="js/newsletter.js" defer></script>
 </head>
@@ -84,7 +87,7 @@ $Controller = new Controllers();
                         by these conditions.
                     </p>
                     <a href="/blog"
-                        class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex mt-4  items-center">
+                        class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 inline-flex mt-4  items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-3 h-3 mr-2 fill-current">
                             <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                             <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
@@ -135,18 +138,64 @@ $Controller = new Controllers();
 
             ?>
 
-            <div class="mt-8">
+            <div class="mt-10 text-center">
                 <a href="/blog"
-                    class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex  items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-3 h-3 mr-2 fill-current">
-                        <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                        <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                    class="inline-flex items-center bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
                     </svg>
+
                     View All Articles
                 </a>
-
             </div>
+
         </section>
+
+        <section class="container mx-auto px-4 py-10">
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-8">Living Voices HIV/AIDS Journeys</h2>
+
+            <?php
+            $VideoCard = new VideoCard();
+
+            $data = $Controller->getAllVideos();
+            $data = Utils::transformData($data);
+
+            $videos = array_map(function ($item) {
+                return new Video(
+                    $item['title'],
+                    $item['thumbnail'],
+                    $item['altText'],
+                    $item['description'],
+                    $item['duration'],
+                    $item['videoSrc'],
+                );
+            }, $data);
+
+            $renderedVideos = VideoCard::renderMultiple($videos);
+            if (preg_match('/<div class="grid gap-6 md:grid-cols-3">\s*<\/div>/', $renderedVideos)) {
+                echo <<<HTML
+                <div class="flex flex-col items-center justify-center">
+                    <img src="./assets/images/empty.svg" alt="No content available" class="w-64 h-auto mb-4">
+                    <p class="text-gray-700 text-center mb-4">No Video Stories yet. Stay tuned for updates.</p>
+                </div>
+                HTML;
+            } else {
+                echo $renderedVideos;
+            }
+            ?>
+            <div class="mt-10 text-center">
+                <a href="/stories"
+                    class="inline-flex items-center bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    View All Stories
+                </a>
+            </div>
+
+        </section>
+
         <section class="container mx-auto px-4 py-10">
             <h2 class="text-3xl font-extrabold text-gray-800 mb-8">My Notable Work</h2>
 
@@ -221,15 +270,18 @@ $Controller = new Controllers();
             }
             ?>
             <div class="mt-8">
-                <a href="/events"
-                    class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-3 h-3 mr-2 fill-current">
-                        <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                        <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
-                    </svg>
-                    View All Events
 
-                </a>
+                <div class="mt-10 text-center">
+                    <a href="/events"
+                        class="inline-flex items-center bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                        </svg>
+
+                        View All Events
+                    </a>
+                </div>
 
             </div>
 
@@ -272,6 +324,8 @@ $Controller = new Controllers();
         $footer->render();
         ?>
     </div>
+
+
 </body>
 <script>
     function showPopup() {
@@ -289,6 +343,45 @@ $Controller = new Controllers();
 
     document.getElementById('close-popup').addEventListener('click', () => {
         document.getElementById('newsletter-popup').classList.add('hidden');
+    });
+
+    // Video Modal Functionality
+    const videoModal = document.getElementById('video-modal');
+    const modalVideo = document.getElementById('modal-video');
+    const videoTitle = document.getElementById('video-title');
+    const videoDescription = document.getElementById('video-description');
+
+    document.querySelectorAll('.play-button').forEach(button => {
+
+        button.addEventListener('click', (e) => {
+            const card = e.target.closest('.group');
+            const videoSrc = card.dataset.videoSrc;
+            const title = card.querySelector('h3').textContent;
+            const description = card.querySelector('p').textContent;
+
+            modalVideo.src = videoSrc;
+            videoTitle.textContent = title;
+            videoDescription.textContent = description;
+
+            videoModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            modalVideo.play();
+        });
+
+    });
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+        videoModal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+        modalVideo.pause();
+    });
+
+    videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) {
+            videoModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+            modalVideo.pause();
+        }
     });
 </script>
 
