@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Muswalo\NurseTendiaBlog\Templates\HTMLHead;
@@ -18,6 +19,7 @@ use Muswalo\NurseTendiaBlog\Controllers\Monitor;
 $Monitor = new Monitor();
 $Monitor->monitor();
 $Controller = new Controllers();
+
 
 ?>
 
@@ -40,8 +42,11 @@ $Controller = new Controllers();
     ?>
     <link rel="stylesheet" href="css/main.css">
     <script src="js/main.js" defer></script>
-    <script src="js/newsletter.js" defer></script>
+    <script src="js/newsLetter.js" defer></script>
     <script src="js/stories.js" defer></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5501512233477967"
+     crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -145,14 +150,13 @@ $Controller = new Controllers();
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
                     </svg>
-
                     View All Articles
                 </a>
+
             </div>
-
         </section>
-
-        <section class="container mx-auto px-4 py-10">
+        
+                <section class="container mx-auto px-4 py-10">
             <h2 class="text-3xl font-extrabold text-gray-800 mb-8">Living Voices HIV/AIDS Journeys</h2>
 
             <?php
@@ -231,25 +235,21 @@ $Controller = new Controllers();
                 echo $renderedEvents;
             }
             ?>
-            <div class="mt-8">
+            <div class="mt-10 text-center">
+                <a href="/events"
+                    class="inline-flex items-center bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                    </svg>
 
-                <div class="mt-10 text-center">
-                    <a href="/events"
-                        class="inline-flex items-center bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                        </svg>
-
-                        View All Events
-                    </a>
-                </div>
-
+                    View All Events
+                </a>
             </div>
 
         </section>
-
-        <section class="container mx-auto px-4 py-10">
+        
+                <section class="container mx-auto px-4 py-10">
             <h2 class="text-3xl font-extrabold text-gray-800 mb-8">My Notable Work</h2>
 
             <p class="text-gray-700 text-lg mb-6">Here are some of my notable works in the field of HIV/AIDS awareness
@@ -305,8 +305,8 @@ $Controller = new Controllers();
                 </div>
             </div>
         </section>
-
-        <div id="newsletter-popup" class="hidden fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50">
+        
+               <div id="newsletter-popup" class="hidden fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50">
             <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
                 <button type="button" id="close-popup" class="absolute top-2 right-2 bg-gray-200 rounded-full p-1 hover:bg-gray-300 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -322,18 +322,20 @@ $Controller = new Controllers();
                 </form>
             </div>
         </div>
+
+    </div>
+
         <?php
         $footer = new HTMLFooter(Constants::SITE_URL);
         $footer->render();
         ?>
     </div>
-
-
 </body>
 <script>
     function showPopup() {
         const popup = document.getElementById('newsletter-popup');
         popup.classList.remove('hidden');
+
         document.cookie = "popupShown=true; path=/";
     }
 
@@ -346,6 +348,46 @@ $Controller = new Controllers();
 
     document.getElementById('close-popup').addEventListener('click', () => {
         document.getElementById('newsletter-popup').classList.add('hidden');
+    });
+    
+
+    // Video Modal Functionality
+    const videoModal = document.getElementById('video-modal');
+    const modalVideo = document.getElementById('modal-video');
+    const videoTitle = document.getElementById('video-title');
+    const videoDescription = document.getElementById('video-description');
+
+    document.querySelectorAll('.play-button').forEach(button => {
+
+        button.addEventListener('click', (e) => {
+            const card = e.target.closest('.group');
+            const videoSrc = card.dataset.videoSrc;
+            const title = card.querySelector('h3').textContent;
+            const description = card.querySelector('p').textContent;
+
+            modalVideo.src = videoSrc;
+            videoTitle.textContent = title;
+            videoDescription.textContent = description;
+
+            videoModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            modalVideo.play();
+        });
+
+    });
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+        videoModal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+        modalVideo.pause();
+    });
+
+    videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) {
+            videoModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+            modalVideo.pause();
+        }
     });
 
 </script>

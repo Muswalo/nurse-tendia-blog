@@ -115,12 +115,6 @@ try {
         echo json_encode(['message' => 'Post created successfully', 'image_path' => null]);
     }
 
-    // Send bulk emails
-    /*
-    WHEN LOOPING WE CREATE A NEW PHP PROCESS TO PROCESS EAMIL SENDING IN BATCHES OF FIVE
-    THIS WILL REQUIRE AS TO CREATE A NEW PHP FILE THAT WILL HANDLE THE EMAIL SENDING
-    WE WILL PASS THE ASYCH PROCESS TO THE FILE TO PROCESS THE EMAIL JOB IN PARALLEL TO THE CURRENT THREAD 
-    **/
     $emails = $controller->getAllSubscribedNamesAndEmails();
     $mail = new PHPMailer(true);
 
