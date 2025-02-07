@@ -134,8 +134,8 @@ videoForm.addEventListener("submit", async (event) => {
     const thumbData = ffmpeg.FS("readFile", "thumbnail.png");
     const thumbnailBlob = new Blob([thumbData.buffer], { type: "image/png" });
 
-    const duration = videoPreviewElement.duration;
-
+    const duration = Math.max(1, Math.round(Number(videoPreviewElement.duration) / 60));
+    
     const formData = new FormData();
     formData.append("videoFile", videoFile);
     formData.append("thumbnail", thumbnailBlob, "thumbnail.png");
