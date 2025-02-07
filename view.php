@@ -38,7 +38,7 @@ $suggestedPosts = $controller->getSuggestedPosts($postId);
     if (!$post) {
         http_response_code(404);
     }
-    
+
     if ($post) {
         $title = htmlspecialchars($post['title']);
         $description = htmlspecialchars(substr($post['content'], 0, 150));
@@ -133,24 +133,25 @@ $suggestedPosts = $controller->getSuggestedPosts($postId);
                 </div>
             <?php endif; ?>
 
-
-
             <h2 class="text-3xl font-extrabold text-gray-800 mt-12 mb-6">Suggested Posts</h2>
-            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <div>
-                    <?php foreach ($suggestedPosts as $suggestedPost): ?>
-                        <div class="bg-white p-6 rounded-lg shadow-lg">
-                            <img src="<?php echo htmlspecialchars($suggestedPost['image_url']); ?>" alt="Post Image" class="w-full h-48 object-cover mb-4 rounded-lg">
-                            <h3 class="text-lg font-semibold mb-2"><a href="/view.php?id=<?php echo htmlspecialchars($suggestedPost['id']); ?>" class="hover:underline"><?php echo htmlspecialchars($suggestedPost['title']); ?></a></h3>
-                        </div>
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <?php foreach ($suggestedPosts as $suggestedPost): ?>
+                    <div class="bg-white p-6 rounded-lg shadow-lg mb-6"> <!-- Added mb-6 for spacing -->
+                        <img src="<?php echo htmlspecialchars($suggestedPost['image_url']); ?>" alt="Post Image" class="w-full h-48 object-cover mb-4 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-2">
+                            <a href="/view.php?id=<?php echo htmlspecialchars($suggestedPost['id']); ?>" class="hover:underline">
+                                <?php echo htmlspecialchars($suggestedPost['title']); ?>
+                            </a>
+                        </h3>
+                    </div>
+                <?php endforeach; ?>
+            </div>
 
-                    <?php endforeach; ?>
-                </div>
-
-                <div class="flex flex-col items-center justify-center">
-                    <a href="/" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">Go to home</a>
-                </div>
-
+            <div class="flex justify-center mt-6">
+                <a href="/" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+                    Go to home
+                </a>
+            </div>
         </main>
         <!-- Footer -->
         <?php
@@ -161,23 +162,23 @@ $suggestedPosts = $controller->getSuggestedPosts($postId);
     </div>
 </body>
 <script>
-    const textToShare = "<?php echo $canonicalUrl; ?>"; 
+    const textToShare = "<?php echo $canonicalUrl; ?>";
     const title = "<?php echo $title; ?>";
     const copyButton = document.getElementById('copyButton');
 
     copyButton.addEventListener('click', () => {
-        console.log ("Emmanuel is awesome");
+        console.log("Emmanuel is awesome");
         if (navigator.share) {
             navigator.share({
-                title: title,
-                url: textToShare
-            })
-            .then(() => {
-                console.log('Successfully shared');
-            })
-            .catch(err => {
-                console.error('Error sharing: ', err);
-            });
+                    title: title,
+                    url: textToShare
+                })
+                .then(() => {
+                    console.log('Successfully shared');
+                })
+                .catch(err => {
+                    console.error('Error sharing: ', err);
+                });
         } else {
             alert('Sharing is not supported on this device.');
         }
